@@ -4,8 +4,6 @@ const { Schema, model } = mongoose;
 //!!add the group ID , org ID here
 
 const userSchema = new Schema({
-  group_id: {},
-  org_ig: {},
   password: {
     type: String,
     required: true,

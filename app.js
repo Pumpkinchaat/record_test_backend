@@ -8,6 +8,9 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const bodyParser = require("body-parser");
 
+const userRouter = require("./routes/user");
+const riskRouter = require("./routes/risk");
+
 const app = express();
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
@@ -64,11 +67,13 @@ app.get("/heartbeat", (req, res) => {
   res.status(200).json({ heartbeat: "detected" });
 });
 
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/risk", riskRouter);
+
 // if the above routes don't get triggered, we can fire another middleware
 // for catching errors
 app.all("*", (req, res, next) => {
   //global error handler
-
   next(new AppError(`cannot find ${req.originalUrl} on this server!`, 404));
 });
 
